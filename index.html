@@ -22,7 +22,7 @@
       --color-surface: #ffffff;
       --color-text: #1a1d23;
       --color-text-light: #6b7280;
-      --color-border: #e5e7eb;
+      --color-border: #d1d5db;
       --color-primary: #003da5;
       --color-primary-hover: #002d7f;
       --color-primary-light: #e8f0ff;
@@ -33,18 +33,18 @@
       --color-success-light: #ecfdf5;
       --color-warning: #d97706;
       --color-warning-light: #fef3c7;
+      --color-info: #0891b2;
+      --color-info-light: #ecf8ff;
       --spacing-xs: 0.5rem;
       --spacing-sm: 0.75rem;
       --spacing-md: 1rem;
       --spacing-lg: 1.5rem;
       --spacing-xl: 2rem;
-      --spacing-2xl: 3rem;
       --radius-sm: 0.375rem;
       --radius-md: 0.5rem;
       --radius-lg: 0.75rem;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
     * {
@@ -66,22 +66,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: var(--spacing-md);
+      justify-content: flex-start;
+      padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
     }
 
     .container {
       width: 100%;
       max-width: 480px;
+      margin-top: var(--spacing-md);
     }
 
     header {
       text-align: center;
-      margin-bottom: var(--spacing-2xl);
+      margin-bottom: var(--spacing-lg);
     }
 
     .logo {
-      margin-bottom: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
       display: flex;
       justify-content: center;
     }
@@ -90,8 +91,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100px;
-      height: 100px;
+      width: 72px;
+      height: 72px;
       background: var(--color-primary);
       border-radius: var(--radius-md);
       position: relative;
@@ -104,14 +105,14 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       background: var(--color-accent);
       border-radius: 0 var(--radius-md) 0 50%;
     }
 
     .logo-text {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
       color: white;
       letter-spacing: -0.05em;
@@ -120,14 +121,14 @@
     }
 
     h1 {
-      font-size: 1.875rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: var(--spacing-sm);
+      margin-bottom: 0.25rem;
       color: var(--color-primary);
     }
 
     .subtitle {
-      font-size: 0.9375rem;
+      font-size: 0.8125rem;
       color: var(--color-text-light);
       font-weight: 400;
     }
@@ -136,38 +137,39 @@
       background-color: var(--color-surface);
       border-radius: var(--radius-lg);
       border: 1px solid var(--color-border);
-      padding: var(--spacing-xl);
+      padding: var(--spacing-lg);
       box-shadow: var(--shadow-sm);
-      margin-bottom: var(--spacing-xl);
+      margin-bottom: var(--spacing-md);
     }
 
     .form-group {
-      margin-bottom: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
     }
 
-    .form-group:last-child {
+    .form-group:last-of-type {
       margin-bottom: 0;
     }
 
     label {
       display: block;
-      font-weight: 500;
-      font-size: 0.9375rem;
-      margin-bottom: var(--spacing-sm);
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.375rem;
       color: var(--color-text);
     }
 
     .label-hint {
       display: block;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--color-text-light);
       font-weight: 400;
       margin-top: 0.25rem;
+      line-height: 1.4;
     }
 
     input {
       width: 100%;
-      padding: var(--spacing-sm) var(--spacing-md);
+      padding: 0.5rem var(--spacing-md);
       font-size: 1rem;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
@@ -183,15 +185,6 @@
       box-shadow: 0 0 0 3px var(--color-primary-light);
     }
 
-    input:invalid:not(:placeholder-shown) {
-      border-color: var(--color-error);
-      box-shadow: 0 0 0 3px var(--color-error-light);
-    }
-
-    input:valid:not(:placeholder-shown) {
-      border-color: var(--color-success);
-    }
-
     input::placeholder {
       color: var(--color-text-light);
     }
@@ -199,13 +192,13 @@
     .button-group {
       display: grid;
       grid-template-columns: 1fr;
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-xl);
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-lg);
     }
 
     button {
       padding: 0.625rem var(--spacing-lg);
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       border: none;
       border-radius: var(--radius-md);
@@ -241,21 +234,25 @@
 
     .btn-secondary {
       background-color: transparent;
-      color: var(--color-primary);
-      border: 1px solid var(--color-primary);
+      color: var(--color-text-light);
+      border: 1px solid var(--color-border);
+      font-size: 0.875rem;
+      padding: 0.5rem var(--spacing-md);
     }
 
     .btn-secondary:hover {
-      background-color: var(--color-primary-light);
+      background-color: #f9fafb;
+      border-color: var(--color-text-light);
+      color: var(--color-text);
     }
 
     .btn-secondary:focus-visible {
-      outline: 2px solid var(--color-primary);
+      outline: 2px solid var(--color-border);
       outline-offset: 2px;
     }
 
     .result-container {
-      margin-top: var(--spacing-xl);
+      margin-top: var(--spacing-md);
       min-height: 0;
       overflow: hidden;
     }
@@ -263,10 +260,8 @@
     .result {
       background-color: var(--color-success-light);
       border: 1px solid var(--color-success);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       padding: var(--spacing-lg);
-      font-weight: 500;
-      color: var(--color-success);
       animation: slideDown 0.3s ease;
       display: none;
     }
@@ -275,16 +270,19 @@
       display: block;
     }
 
-    .result.warning {
-      background-color: var(--color-warning-light);
-      border-color: var(--color-warning);
-      color: var(--color-warning);
-    }
-
     .result.error {
       background-color: var(--color-error-light);
       border-color: var(--color-error);
-      color: var(--color-error);
+    }
+
+    .result.warning {
+      background-color: var(--color-warning-light);
+      border-color: var(--color-warning);
+    }
+
+    .result.at-minimum {
+      background-color: var(--color-warning-light);
+      border-color: var(--color-warning);
     }
 
     @keyframes slideDown {
@@ -298,27 +296,108 @@
       }
     }
 
-    .result-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: var(--spacing-sm);
+    .result-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .result-details {
+    .result-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--spacing-md);
+      align-items: center;
       font-size: 0.9375rem;
-      opacity: 0.9;
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.8125rem;
+    .result-row-label {
       color: var(--color-text-light);
-      margin-top: var(--spacing-xl);
+      font-weight: 500;
+    }
+
+    .result-row-value {
+      font-weight: 600;
+      text-align: right;
+      color: var(--color-text);
+    }
+
+    .result-row-value.info {
+      color: var(--color-info);
+    }
+
+    .result-main {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .result-main-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .result-main-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .result-main-subtitle {
+      font-size: 0.875rem;
+      margin-top: var(--spacing-sm);
+      line-height: 1.5;
+    }
+
+    .result.success .result-main-label {
+      color: var(--color-success);
+    }
+
+    .result.success .result-main-value {
+      color: var(--color-success);
+    }
+
+    .result.error .result-main-label {
+      color: var(--color-error);
+    }
+
+    .result.error .result-main-value {
+      color: var(--color-error);
+    }
+
+    .result.warning .result-main-label {
+      color: var(--color-warning);
+    }
+
+    .result.warning .result-main-value {
+      color: var(--color-warning);
+    }
+
+    .result.at-minimum .result-main-label {
+      color: var(--color-warning);
+    }
+
+    .result.at-minimum .result-main-value {
+      color: var(--color-warning);
+    }
+
+    .share-link {
+      text-align: center;
+      margin-top: var(--spacing-md);
+      font-size: 0.75rem;
+    }
+
+    .share-link button {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
     }
 
     @media (max-width: 640px) {
       body {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-md);
       }
 
       .container {
@@ -326,26 +405,30 @@
       }
 
       h1 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
       }
 
       .card {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
+      }
+
+      .button-group {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
       }
 
       button {
-        padding: 0.75rem var(--spacing-md);
-        font-size: 0.95rem;
+        padding: 0.5rem var(--spacing-sm);
+        font-size: 0.875rem;
       }
 
-      .button-group {
-        grid-template-columns: 1fr;
+      .btn-secondary {
+        padding: 0.5rem var(--spacing-sm);
+        font-size: 0.8125rem;
       }
-    }
 
-    @media (min-width: 641px) {
-      .button-group {
-        grid-template-columns: 1fr 1fr;
+      .result-main-value {
+        font-size: 1.25rem;
       }
     }
 
@@ -381,7 +464,7 @@
     <main>
       <form class="card" id="calculatorForm" onsubmit="handleSubmit(event)">
         <div class="form-group">
-          <label for="saldo">Saldo Tijd</label>
+          <label for="saldo">Huidig recupsaldo</label>
           <input
             type="text"
             id="saldo"
@@ -392,11 +475,11 @@
             aria-describedby="saldoHint"
             autocomplete="off"
           >
-          <span class="label-hint" id="saldoHint">Voer in als uu:mm of uu.mm (max 59 minuten)</span>
+          <span class="label-hint" id="saldoHint">Voer in als uu:mm of uu.mm (max. 59 minuten)</span>
         </div>
 
         <div class="form-group">
-          <label for="dagen">Rustdagen aftrekken</label>
+          <label for="dagen">Openstaande rustdagen</label>
           <input
             type="number"
             id="dagen"
@@ -409,7 +492,7 @@
             aria-describedby="dagenHint"
             autocomplete="off"
           >
-          <span class="label-hint" id="dagenHint">Voer het aantal rustdagen in</span>
+          <span class="label-hint" id="dagenHint">Voer het aantal openstaande rustdagen in</span>
         </div>
 
         <div class="button-group">
@@ -422,18 +505,64 @@
         <div class="result" id="result" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
 
-      <footer>
-        <p>
-          <button type="button" class="btn-secondary" style="width: auto; padding: 0.5rem 1rem; font-size: 0.875rem;" onclick="shareUrl()">
-            🔗 Deel deze calculator
-          </button>
-        </p>
-      </footer>
+      <div class="share-link">
+        <button type="button" class="btn-secondary" onclick="shareUrl()">
+          🔗 Delen
+        </button>
+      </div>
     </main>
   </div>
 
   <script>
-    // ===== BEREKENINGSLOGICA: EXACT HETZELFDE BEHOUDEN =====
+    // ===== HULPFUNCTIES VOOR MINUUTBEREKENINGEN =====
+
+    /**
+     * Zet tijd-string (uu:mm of uu.mm) om naar minuten
+     */
+    function parseTimeToMinutes(timeStr) {
+      const separator = timeStr.includes(':') ? ':' : '.';
+      const parts = timeStr.split(separator);
+      
+      if (parts.length !== 2) return null;
+      
+      const hours = parseInt(parts[0], 10);
+      const minutes = parseInt(parts[1], 10);
+      
+      if (isNaN(hours) || isNaN(minutes) || minutes >= 60) {
+        return null;
+      }
+      
+      return hours * 60 + minutes;
+    }
+
+    /**
+     * Zet minuten om naar uu:mm formaat
+     */
+    function formatMinutesToTime(totalMinutes) {
+      const hours = Math.floor(Math.abs(totalMinutes) / 60);
+      const mins = Math.abs(totalMinutes) % 60;
+      const sign = totalMinutes < 0 ? '−' : '';
+      return `${sign}${hours}u${mins.toString().padStart(2, '0')}`;
+    }
+
+    /**
+     * Zet minuten om naar dagen/uren/minuten formaat
+     * Basis: 1 dag = 456 minuten (7u36)
+     */
+    function formatMinutesToDayFormat(totalMinutes) {
+      const minutesPerDay = 456; // 7u36
+      const absMinutes = Math.abs(totalMinutes);
+      
+      const days = Math.floor(absMinutes / minutesPerDay);
+      const remaining = absMinutes % minutesPerDay;
+      const hours = Math.floor(remaining / 60);
+      const mins = remaining % 60;
+      
+      const sign = totalMinutes < 0 ? '−' : '';
+      return `${sign}${days}d, ${hours}h, ${mins.toString().padStart(2, '0')}m`;
+    }
+
+    // ===== VALIDATIE =====
 
     function validateInput(input) {
       if (input.id === 'saldo') {
@@ -445,86 +574,108 @@
       }
     }
 
+    // ===== BEREKENING (HERZIEN VOOR GERESERVEERDE UREN) =====
+
     function bereken() {
       const saldoInput = document.getElementById('saldo').value.trim();
-      const dagenAftrekken = parseFloat(document.getElementById('dagen').value) || 0;
+      const rustdagen = parseInt(document.getElementById('dagen').value) || 0;
 
-      let uren, minuten;
-      if (saldoInput.includes(':')) {
-        const parts = saldoInput.split(':');
-        if (parts.length !== 2) {
-          showResult('Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)', 'error');
-          return;
-        }
-        uren = parseFloat(parts[0]);
-        minuten = parseFloat(parts[1]);
-      } else if (saldoInput.includes('.')) {
-        const parts = saldoInput.split('.');
-        if (parts.length !== 2) {
-          showResult('Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)', 'error');
-          return;
-        }
-        uren = parseFloat(parts[0]);
-        minuten = parseFloat(parts[1]);
-      } else {
+      // Parse saldo naar minuten
+      const saldoMinutes = parseTimeToMinutes(saldoInput);
+      
+      if (saldoMinutes === null) {
         showResult('Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)', 'error');
         return;
       }
 
-      if (isNaN(uren) || isNaN(minuten) || minuten >= 60) {
-        showResult('Ongeldige invoer. Gebruik het formaat uu:mm of uu.mm (bijv. 86:03 of 86.03)', 'error');
-        return;
-      }
+      // Bereken gereserveerde uren voor rustdagen
+      // 1 rustdag = 456 minuten (7u36)
+      const minutesPerRestDay = 456;
+      const gereserveerdMinutes = rustdagen * minutesPerRestDay;
 
-      // ORIGINELE BEREKENINGSLOGICA - NIET AANGERAAKT
-      const totaleUren = uren + (minuten / 60);
-      const werkdagUren = 7.6;
-      const resterendeUren = totaleUren - (dagenAftrekken * werkdagUren);
+      // Bereken vrij beschikbaar recupsaldo
+      const vrijMinutes = saldoMinutes - gereserveerdMinutes;
 
-      const volledigeDagen = Math.floor(resterendeUren / werkdagUren);
-      const overgeblevenUren = resterendeUren % werkdagUren;
-      const urenDeel = Math.floor(overgeblevenUren);
-      const minutenDeel = Math.round((overgeblevenUren % 1) * 60);
-
-      if (resterendeUren < 0) {
-        const absValue = Math.abs(resterendeUren).toFixed(2);
-        showResult(
-          `Negatief saldo: ${absValue} uur`,
-          'warning',
-          `Je hebt meer rustdagen afgetrokken dan je hebt.`
+      // Bepaal status en toon resultaat
+      if (vrijMinutes < 0) {
+        // ROOD: Tekort
+        const tekortMinutes = Math.abs(vrijMinutes);
+        showResultWithBreakdown(
+          saldoMinutes,
+          gereserveerdMinutes,
+          vrijMinutes,
+          'error',
+          `Waarschuwing: je saldo staat ${formatMinutesToTime(tekortMinutes)} onder het vereiste minimum voor ${rustdagen} rustdag${rustdagen !== 1 ? 'en' : ''}.`
+        );
+      } else if (vrijMinutes === 0) {
+        // ORANJE: Minimumsaldo bereikt
+        showResultWithBreakdown(
+          saldoMinutes,
+          gereserveerdMinutes,
+          vrijMinutes,
+          'at-minimum',
+          `Je bereikt exact het minimumsaldo voor ${rustdagen} rustdag${rustdagen !== 1 ? 'en' : ''}. Geen vrije recup beschikbaar.`
         );
       } else {
-        showResult(
-          `${resterendeUren.toFixed(2)} uur`,
+        // GROEN: Vrij beschikbaar
+        showResultWithBreakdown(
+          saldoMinutes,
+          gereserveerdMinutes,
+          vrijMinutes,
           'success',
-          `${volledigeDagen} dagen, ${urenDeel} uur, ${minutenDeel} minuten`
+          ''
         );
       }
     }
 
     // ===== UI/UX FUNCTIES =====
 
-    function showResult(mainText, type = 'success', detailText = '') {
+    function showResultWithBreakdown(saldoMinutes, gereserveerdMinutes, vrijMinutes, type, warning) {
       const resultEl = document.getElementById('result');
       resultEl.className = `result ${type} show`;
-      
-      let html = `<div class="result-value">${mainText}</div>`;
-      if (detailText) {
-        html += `<div class="result-details">${detailText}</div>`;
+
+      let html = `
+        <div class="result-breakdown">
+          <div class="result-row">
+            <div class="result-row-label">Totaal recupsaldo:</div>
+            <div class="result-row-value info">${formatMinutesToTime(saldoMinutes)}</div>
+          </div>
+          <div class="result-row">
+            <div class="result-row-label">Gereserveerd voor rustdagen:</div>
+            <div class="result-row-value info">${formatMinutesToTime(gereserveerdMinutes)}</div>
+          </div>
+        </div>
+        <div class="result-main">
+          <div class="result-main-label">${type === 'error' ? 'Tekort' : type === 'at-minimum' ? 'Minimumsaldo bereikt' : 'Vrij beschikbaar'}</div>
+          <div class="result-main-value">${formatMinutesToTime(vrijMinutes)}</div>
+      `;
+
+      if (warning) {
+        html += `<div class="result-main-subtitle">${warning}</div>`;
       }
+
+      html += `</div>`;
+
       resultEl.innerHTML = html;
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showResult(message, type = 'error') {
+      const resultEl = document.getElementById('result');
+      resultEl.className = `result ${type} show`;
+      resultEl.innerHTML = `<div class="result-main"><div class="result-main-value">${message}</div></div>`;
       resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function handleSubmit(event) {
       event.preventDefault();
       const form = event.target;
-      
+
       if (!form.checkValidity()) {
         showResult('Controleer je invoer alsjeblieft', 'error');
         return;
       }
-      
+
       bereken();
     }
 
@@ -538,11 +689,10 @@
       navigator.clipboard.writeText(window.location.href).then(() => {
         const resultEl = document.getElementById('result');
         resultEl.className = 'result show';
-        resultEl.innerHTML = '<div class="result-value">Link gekopieerd naar klembord! 🔗</div>';
+        resultEl.innerHTML = '<div class="result-main"><div class="result-main-value">Link gekopieerd! 🔗</div></div>';
         resultEl.style.backgroundColor = 'var(--color-primary-light)';
         resultEl.style.borderColor = 'var(--color-primary)';
-        resultEl.style.color = 'var(--color-primary)';
-        
+
         setTimeout(() => {
           resultEl.classList.remove('show');
         }, 2000);
