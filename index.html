@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bereken je resterende recup uren met de VCET-calculator.">
+  <meta name="keywords" content="recup uren, VCET, calculator, rustdagen">
+  <title>Resterende Recup Uren Berekenen</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R9DG11SG16"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R9DG11SG16');
+  </script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 2em;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: #ffffff;
+      text-align: center;
+    }
+    .logo {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .logo a {
+      display: inline-block;
+    }
+    .logo img {
+      max-width: 200px;
+      cursor: pointer;
+    }
+    label, input {
+      display: block;
+      margin: 10px auto;
+      text-align: left;
+      width: 250px;
+      padding: 5px;
+    }
+    input:invalid {
+      border: 2px solid #ff0000;
+    }
+    input:valid {
+      border: 2px solid #4CAF50;
+    }
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, transform 0.1s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+    #resultaat {
+      margin-top: 20px;
+      font-weight: bold;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @media (max-width: 600px) {
+      body {
+        margin: 1em;
+      }
+      input, label {
+        width: 100%;
+        max-width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <a href="fun.html">
+      <img src="vcet-logo.png" alt="VCET Logo">
+    </a>
+  </div>
+  <h2>Resterende Recup Uren Berekenen</h2>
+
+  <label>Saldo tijd (uren:minuten), bijv. <strong>86:03</strong> of <strong>86.03</strong>:<br><small>(max 59 min)</small></label>
+  <input type="text" id="saldo" placeholder="uu:mm of uu.mm" pattern="\d{1,3}:[0-5][0-9]|\d{1,3}\.[0-5][0-9]" required oninput="validateInput(this)">
+
+  <label>Rustdagen aftrekken:</label>
+  <input type="number" id="dagen" min="0" required oninput="validateInput(this)">
+
+  <button onclick="bereken()">Bereken</button>
+  <button onclick="shareUrl()">Deel deze calculator</button>
+  <p style="font-size: 0.9em; color: #bbb;">Voer je saldo in en het aantal rustdagen, klik op 'Bereken' om het resterende recup-saldo te zien.</p>
+
+  <div id="resultaat"></div>
+
+  <script>
+    function validateInput(input) {
+      if (input.id === 'saldo') {
+        const valid = input.value.match(/\d{1,3}:[0-5][0-9]|\d{1,3}\.[0-5][0-9]/) !== null;
+        input.setCustomValidity(valid ? '' : 'Gebruik uu:mm of uu.mm (bijv. 86:03 of 86.03)');
+      } else if (input.id === 'dagen') {
+        const valid = input.value >= 0;
+        input.setCustomValidity(valid ? '' : 'Rustdagen moeten 0 of hoger zijn');
+      }
+    }
+
+    function shareUrl() {
+      navigator.clipboard.writeText(window.location.href).then(() => alert('Link gekopieerd!'));
+    }
+
+    function bereken() {
+      const saldoInput = document.getElementById('saldo').value.trim();
+      const dagenAftrekken = parseFloat(document.getElementById('dagen').value) || 0;
+
+      let uren, minuten;
+      if (saldoInput.includes(':')) {
+        const parts = saldoInput.split(':');
+        if (parts.length !== 2) {
+          document.getElementById('resultaat').textContent = 'Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)';
+          return;
+        }
+        uren = parseFloat(parts[0]);
+        minuten = parseFloat(parts[1]);
+      } else if (saldoInput.includes('.')) {
+        const parts = saldoInput.split('.');
+        if (parts.length !== 2) {
+          document.getElementById('resultaat').textContent = 'Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)';
+          return;
+        }
+        uren = parseFloat(parts[0]);
+        minuten = parseFloat(parts[1]);
+      } else {
+        document.getElementById('resultaat').textContent = 'Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)';
+        return;
+      }
+
+      if (isNaN(uren) || isNaN(minuten) || minuten >= 60) {
+        document.getElementById('resultaat').textContent = 'Ongeldige invoer. Gebruik het formaat uu:mm of uu.mm (bijv. 86:03 of 86.03)';
+        return;
+      }
+
+      const totaleUren = uren + (minuten / 60);
+      const werkdagUren = 7.6;
+      const resterendeUren = totaleUren - (dagenAftrekken * werkdagUren);
+
+      const volledigeDagen = Math.floor(resterendeUren / werkdagUren);
+      const overgeblevenUren = resterendeUren % werkdagUren;
+      const urenDeel = Math.floor(overgeblevenUren);
+      const minutenDeel = Math.round((overgeblevenUren % 1) * 60);
+
+      const resultaat = document.getElementById('resultaat');
+      if (resterendeUren < 0) {
+        resultaat.textContent = `Let op: je hebt een negatief saldo van ${Math.abs(resterendeUren).toFixed(2)} uur.`;
+      } else {
+        resultaat.textContent = `Resterende tijd: ${resterendeUren.toFixed(2)} uur → ${volledigeDagen} dagen, ${urenDeel} uur, ${minutenDeel} minuten`;
+      }
+
+      resultaat.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
