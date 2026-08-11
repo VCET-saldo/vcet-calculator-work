@@ -18,14 +18,15 @@
   </script>
   <style>
     :root {
-      --color-bg: #f5f6f7;
+      --color-bg: #f0f2f5;
       --color-surface: #ffffff;
       --color-text: #1a1d23;
       --color-text-light: #6b7280;
       --color-border: #e5e7eb;
-      --color-primary: #3b82f6;
-      --color-primary-hover: #2563eb;
-      --color-primary-light: #eff6ff;
+      --color-primary: #003da5;
+      --color-primary-hover: #002d7f;
+      --color-primary-light: #e8f0ff;
+      --color-accent: #ffc000;
       --color-error: #dc2626;
       --color-error-light: #fee2e2;
       --color-success: #059669;
@@ -58,7 +59,7 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background-color: var(--color-bg);
+      background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf1 100%);
       color: var(--color-text);
       line-height: 1.6;
       min-height: 100vh;
@@ -85,40 +86,44 @@
       justify-content: center;
     }
 
-    .logo a {
+    .logo-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 80px;
-      height: 80px;
-      background-color: var(--color-primary-light);
-      border-radius: var(--radius-lg);
-      border: 2px solid var(--color-primary);
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .logo a:hover {
-      background-color: var(--color-primary);
-      transform: translateY(-2px);
+      width: 100px;
+      height: 100px;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      position: relative;
       box-shadow: var(--shadow-md);
+      overflow: hidden;
     }
 
-    .logo a:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
+    .logo-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--color-accent);
+      border-radius: 0 var(--radius-md) 0 50%;
     }
 
-    .logo img {
-      max-width: 70%;
-      height: auto;
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.05em;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
       font-size: 1.875rem;
       font-weight: 700;
       margin-bottom: var(--spacing-sm);
-      color: var(--color-text);
+      color: var(--color-primary);
     }
 
     .subtitle {
@@ -365,11 +370,11 @@
   <div class="container">
     <header>
       <div class="logo">
-        <a href="fun.html" title="VCET Logo">
-          <img src="vcet-logo.png" alt="VCET Logo">
-        </a>
+        <div class="logo-badge" title="VCET">
+          <div class="logo-text">V</div>
+        </div>
       </div>
-      <h1>Recup Calculator</h1>
+      <h1>VCET Recup</h1>
       <p class="subtitle">Bereken je resterende rustdagen</p>
     </header>
 
