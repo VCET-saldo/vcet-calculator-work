@@ -468,14 +468,14 @@
           <input
             type="text"
             id="saldo"
-            placeholder="bijv. 86:03 of 86.03"
-            pattern="\d{1,3}:[0-5][0-9]|\d{1,3}\.[0-5][0-9]"
+            placeholder="bijv. 86:03 of 86.03 (of −2:04)"
+            pattern="-?\d{1,3}:[0-5][0-9]|-?\d{1,3}\.[0-5][0-9]"
             required
             oninput="validateInput(this)"
             aria-describedby="saldoHint"
             autocomplete="off"
           >
-          <span class="label-hint" id="saldoHint">Voer in als uu:mm of uu.mm (max. 59 minuten)</span>
+          <span class="label-hint" id="saldoHint">Voer in als uu:mm of uu.mm. Negatieve waarden mogelijk (bijv. −2:04)</span>
         </div>
 
         <div class="form-group">
@@ -517,11 +517,15 @@
     // ===== HULPFUNCTIES VOOR MINUUTBEREKENINGEN =====
 
     /**
-     * Zet tijd-string (uu:mm of uu.mm) om naar minuten
+     * Zet tijd-string (uu:mm of uu.mm, incl. negatief) om naar minuten
      */
     function parseTimeToMinutes(timeStr) {
-      const separator = timeStr.includes(':') ? ':' : '.';
-      const parts = timeStr.split(separator);
+      // Controleer op negatief teken
+      const isNegative = timeStr.startsWith('-');
+      const cleanStr = timeStr.replace('-', '');
+      
+      const separator = cleanStr.includes(':') ? ':' : '.';
+      const parts = cleanStr.split(separator);
       
       if (parts.length !== 2) return null;
       
@@ -532,16 +536,23 @@
         return null;
       }
       
-      return hours * 60 + minutes;
+      let totalMinutes = hours * 60 + minutes;
+      if (isNegative) {
+        totalMinutes = -totalMinutes;
+      }
+      
+      return totalMinutes;
     }
 
     /**
-     * Zet minuten om naar uu:mm formaat
+     * Zet minuten om naar uu:mm formaat (incl. negatief)
      */
     function formatMinutesToTime(totalMinutes) {
-      const hours = Math.floor(Math.abs(totalMinutes) / 60);
-      const mins = Math.abs(totalMinutes) % 60;
-      const sign = totalMinutes < 0 ? '−' : '';
+      const isNegative = totalMinutes < 0;
+      const absMinutes = Math.abs(totalMinutes);
+      const hours = Math.floor(absMinutes / 60);
+      const mins = absMinutes % 60;
+      const sign = isNegative ? '−' : '';
       return `${sign}${hours}u${mins.toString().padStart(2, '0')}`;
     }
 
@@ -551,6 +562,7 @@
      */
     function formatMinutesToDayFormat(totalMinutes) {
       const minutesPerDay = 456; // 7u36
+      const isNegative = totalMinutes < 0;
       const absMinutes = Math.abs(totalMinutes);
       
       const days = Math.floor(absMinutes / minutesPerDay);
@@ -558,7 +570,7 @@
       const hours = Math.floor(remaining / 60);
       const mins = remaining % 60;
       
-      const sign = totalMinutes < 0 ? '−' : '';
+      const sign = isNegative ? '−' : '';
       return `${sign}${days}d, ${hours}h, ${mins.toString().padStart(2, '0')}m`;
     }
 
@@ -566,8 +578,8 @@
 
     function validateInput(input) {
       if (input.id === 'saldo') {
-        const valid = input.value.match(/\d{1,3}:[0-5][0-9]|\d{1,3}\.[0-5][0-9]/) !== null;
-        input.setCustomValidity(valid ? '' : 'Gebruik uu:mm of uu.mm (bijv. 86:03 of 86.03)');
+        const valid = input.value.match(/-?\d{1,3}:[0-5][0-9]|-?\d{1,3}\.[0-5][0-9]/) !== null;
+        input.setCustomValidity(valid ? '' : 'Gebruik uu:mm of uu.mm (bijv. 86:03 of −2:04)');
       } else if (input.id === 'dagen') {
         const valid = input.value >= 0;
         input.setCustomValidity(valid ? '' : 'Rustdagen moeten 0 of hoger zijn');
@@ -580,11 +592,11 @@
       const saldoInput = document.getElementById('saldo').value.trim();
       const rustdagen = parseInt(document.getElementById('dagen').value) || 0;
 
-      // Parse saldo naar minuten
+      // Parse saldo naar minuten (nu ook negatief mogelijk)
       const saldoMinutes = parseTimeToMinutes(saldoInput);
       
       if (saldoMinutes === null) {
-        showResult('Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of 86.03)', 'error');
+        showResult('Voer de tijd in als uu:mm of uu.mm (bijv. 86:03 of −2:04)', 'error');
         return;
       }
 
@@ -598,14 +610,14 @@
 
       // Bepaal status en toon resultaat
       if (vrijMinutes < 0) {
-        // ROOD: Tekort
+        // ROOD: Negatief/Tekort
         const tekortMinutes = Math.abs(vrijMinutes);
         showResultWithBreakdown(
           saldoMinutes,
           gereserveerdMinutes,
           vrijMinutes,
           'error',
-          `Waarschuwing: je saldo staat ${formatMinutesToTime(tekortMinutes)} onder het vereiste minimum voor ${rustdagen} rustdag${rustdagen !== 1 ? 'en' : ''}.`
+          `Je hebt ${formatMinutesToTime(tekortMinutes)} te veel opgepakt voor ${rustdagen} rustdag${rustdagen !== 1 ? 'en' : ''}.`
         );
       } else if (vrijMinutes === 0) {
         // ORANJE: Minimumsaldo bereikt
@@ -646,7 +658,7 @@
           </div>
         </div>
         <div class="result-main">
-          <div class="result-main-label">${type === 'error' ? 'Tekort' : type === 'at-minimum' ? 'Minimumsaldo bereikt' : 'Vrij beschikbaar'}</div>
+          <div class="result-main-label">${type === 'error' ? 'Te veel opgepakt' : type === 'at-minimum' ? 'Minimumsaldo bereikt' : 'Vrij beschikbaar'}</div>
           <div class="result-main-value">${formatMinutesToTime(vrijMinutes)}</div>
       `;
 
