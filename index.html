@@ -571,7 +571,7 @@
       const mins = remaining % 60;
       
       const sign = isNegative ? '−' : '';
-      return `${sign}${days}d, ${hours}h, ${mins.toString().padStart(2, '0')}m`;
+      return `${sign}${days}d ${hours}h ${mins.toString().padStart(2, '0')}m`;
     }
 
     // ===== VALIDATIE =====
@@ -659,7 +659,7 @@
         </div>
         <div class="result-main">
           <div class="result-main-label">${type === 'error' ? 'Te veel opgepakt' : type === 'at-minimum' ? 'Minimumsaldo bereikt' : 'Vrij beschikbaar'}</div>
-          <div class="result-main-value">${formatMinutesToTime(vrijMinutes)}</div>
+          <div class="result-main-value">${formatMinutesToDayFormat(vrijMinutes)}</div>
       `;
 
       if (warning) {
